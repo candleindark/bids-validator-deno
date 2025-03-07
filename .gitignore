@@ -1,3 +1,4 @@
 __pycache__
 /artifacts
 /dist
+/src/bids_validator_deno/bin
