@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build_wheels:
     name: Build whl on ${{ matrix.os }}
@@ -38,7 +42,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: bids-validator-${{ matrix.os }}
-          path: dist/bids-validator
+          path: |
+            dist/bids-validator
+            dist/bids-validator.*
       - uses: actions/upload-artifact@v4
         with:
           name: wheel-${{ matrix.os }}
