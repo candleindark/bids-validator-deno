@@ -1,15 +1,23 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["pdm-backend", "wheel", "requests"]
+build-backend = "pdm.backend"
+
+[tool.pdm.build]
+is-purelib = false
+# includes = ["src"]
+excludes = ["dist/*", "lib/*", ".gitignore"]
+
+[tool.pdm.build.wheel-data]
+scripts = ["dist/bids-validator", "dist/bids-validator.exe"]
 
 [project]
 name = "bids-validator-deno"
 dynamic = ["version"]
-description = ''
+description = 'TODO'
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
-keywords = []
+keywords = ["bids"]
 authors = [
   { name = "Isaac To", email = "candleindark@gmail.com" },
 ]
@@ -25,43 +33,3 @@ Documentation = "https://github.com/candleindark/bids-validator-deno#readme"
 Issues = "https://github.com/candleindark/bids-validator-deno/issues"
 Source = "https://github.com/candleindark/bids-validator-deno"
 
-[project.scripts]
-bids-validator-deno = "bids_validator_deno.cli:bids_validator_deno"
-
-[tool.hatch.build.targets.wheel]
-only-include = ["src/bids_validator_deno", "dist/bids-validator", "dist/bids-validator.exe"]
-
-[tool.hatch.build.targets.wheel.hooks.custom]
-
-[tool.hatch.build.targets.wheel.sources]
-"src" = ""
-"artifacts" = "bids_validator_deno/bin"
-
-[tool.hatch.version]
-path = "src/bids_validator_deno/__about__.py"
-
-[tool.hatch.envs.types]
-extra-dependencies = [
-  "mypy>=1.0.0",
-]
-[tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/bids_validator_deno tests}"
-
-[tool.coverage.run]
-source_pkgs = ["bids_validator_deno", "tests"]
-branch = true
-parallel = true
-omit = [
-  "src/bids_validator_deno/__about__.py",
-]
-
-[tool.coverage.paths]
-bids_validator_deno = ["src/bids_validator_deno", "*/bids-validator-deno/src/bids_validator_deno"]
-tests = ["tests", "*/bids-validator-deno/tests"]
-
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
