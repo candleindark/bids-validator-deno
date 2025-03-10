@@ -1,0 +1,28 @@
+name: Build Verify Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  compile_deno_binaries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: compile deno binaries
+        run: |
+          mkdir artifacts
+          deno compile -ERNW --target x86_64-pc-windows-msvc -o artifacts/bids-validator-x86_64-pc-windows-msvc jsr:@bids/validator
+          deno compile -ERNW --target x86_64-apple-darwin -o artifacts/bids-validator-x86_64-apple-darwin jsr:@bids/validator
+          deno compile -ERNW --target aarch64-apple-darwin -o artifacts/bids-validator-aarch64-apple-darwin jsr:@bids/validator
+          deno compile -ERNW --target x86_64-unknown-linux-gnu -o artifacts/bids-validator-x86_64-unknown-linux-gnu jsr:@bids/validator
+          deno compile -ERNW --target aarch64-unknown-linux-gnu -o artifacts/bids-validator-aarch64-unknown-linux-gnu jsr:@bids/validator
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: artifacts
+
+#  build_wheels:
+#  verify_wheels:
+#  publish_wheels:
