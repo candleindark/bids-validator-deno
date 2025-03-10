@@ -4,93 +4,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  compile_deno_binaries:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
-      - name: compile deno binaries
-        run: |
-          mkdir artifacts
-          deno compile -ERNW --target x86_64-pc-windows-msvc -o artifacts/bids-validator-x86_64-pc-windows-msvc jsr:@bids/validator
-          deno compile -ERNW --target x86_64-apple-darwin -o artifacts/bids-validator-x86_64-apple-darwin jsr:@bids/validator
-          deno compile -ERNW --target aarch64-apple-darwin -o artifacts/bids-validator-aarch64-apple-darwin jsr:@bids/validator
-          deno compile -ERNW --target x86_64-unknown-linux-gnu -o artifacts/bids-validator-x86_64-unknown-linux-gnu jsr:@bids/validator
-          deno compile -ERNW --target aarch64-unknown-linux-gnu -o artifacts/bids-validator-aarch64-unknown-linux-gnu jsr:@bids/validator
-      - uses: actions/upload-artifact@v4
-        with:
-          name: artifacts
-          path: artifacts
 
   build_wheels:
-    name: Build Wheels on ${{ matrix.os }}
-    needs: [compile_deno_binaries]
+    name: Compile and build Wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         # windows-latest is an Intel runner
         # macos-13 is an Intel runner, macos-latest is an Apple Silicon runner
         # ubuntu-latest is an Intel runner, ubuntu-24.04-arm is an arm runner
-        os: [windows-latest, macos-13,  macos-latest, ubuntu-latest, ubuntu-24.04-arm]
+        os: 
+          - windows-latest
+          - macos-13
+          - macos-latest
+          - ubuntu-latest
+          - ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v4
       - name: Install Hatch
         uses: pypa/hatch@install
-      - uses: actions/download-artifact@v4
+      - uses: denoland/setup-deno@v2
         with:
-          name: artifacts
-          path: artifacts
-      - name: Select BIDS validator binary
-        shell: bash
+          deno-version: v2.x
+      - uses: actions/checkout@v4
+      - name: compile deno binaries
         run: |
-          if [ "${{ matrix.os }}" == 'windows-latest' ]; then
-            mv artifacts/bids-validator-x86_64-pc-windows-msvc artifacts/bids-validator
-          elif [ "${{ matrix.os }}" == 'macos-13' ]; then
-            mv artifacts/bids-validator-x86_64-apple-darwin artifacts/bids-validator
-          elif [ "${{ matrix.os }}" == 'macos-latest' ]; then
-            mv artifacts/bids-validator-aarch64-apple-darwin artifacts/bids-validator
-          elif [ "${{ matrix.os }}" == 'ubuntu-latest' ]; then
-            mv artifacts/bids-validator-x86_64-unknown-linux-gnu artifacts/bids-validator
-          elif [ "${{ matrix.os }}" == 'ubuntu-24.04-arm' ]; then
-            mv artifacts/bids-validator-aarch64-unknown-linux-gnu artifacts/bids-validator
-          fi
+          mkdir dist
+          deno compile -ERNW -o dist/bids-validator jsr:@bids/validator
       - name: Build wheel
         run: hatch build -t wheel
       - uses: actions/upload-artifact@v4
         with:
+          name: bids-validator-${{ matrix.os }}
+          path: dist/bids-validator
+      - uses: actions/upload-artifact@v4
+        with:
           name: wheel-${{ matrix.os }}
           path: dist/*.whl
-
-#  verify_wheels:
-  publish_wheels:
-    name: Publish Wheels
-    needs: [build_wheels]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Hatch
-        uses: pypa/hatch@install
-      - uses: actions/download-artifact@v4
-        with:
-          name: wheel-windows-latest
-          path: dist/
-      - uses: actions/download-artifact@v4
-        with:
-          name: wheel-macos-13
-          path: dist/
-      - uses: actions/download-artifact@v4
-        with:
-          name: wheel-macos-latest
-          path: dist/
-#      - uses: actions/download-artifact@v4
-#        with:
-#          name: wheel-ubuntu-latest
-#          path: dist/
-#      - uses: actions/download-artifact@v4
-#        with:
-#          name: wheel-ubuntu-24.04-arm
-#          path: dist/
       - name: print out the content of the dist folder
         run: ls -l dist/
       - name: Publish wheels
