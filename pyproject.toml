@@ -35,7 +35,7 @@ Source = "https://github.com/candleindark/bids-validator-deno"
 bids-validator-deno = "bids_validator_deno.cli:bids_validator_deno"
 
 [tool.hatch.build.targets.wheel]
-only-include = ["src/bids_validator_deno", "dist/bids-validator"]
+only-include = ["src/bids_validator_deno", "dist/bids-validator", "dist/bids-validator.exe"]
 
 [tool.hatch.build.targets.wheel.hooks.custom]
 
