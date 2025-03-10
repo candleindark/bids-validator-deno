@@ -18,6 +18,9 @@ def get_platform_tag():
         arch_tag = "x86_64"
     elif arch in ("arm64", "aarch64"):
         arch_tag = "arm64"
+    elif arch == "AMD64":
+        # seems to be the case on Windows
+        arch_tag = arch.lower()
     else:
         raise ValueError(f"Unsupported architecture: {arch}")
 
