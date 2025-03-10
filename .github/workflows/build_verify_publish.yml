@@ -3,6 +3,9 @@ name: Build Verify Publish
 on:
   workflow_dispatch:
 
+concurrency: 
+  cancel-in-progress: false
+
 jobs:
 
   build_wheels:
