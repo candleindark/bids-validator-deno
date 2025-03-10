@@ -21,6 +21,7 @@ keywords = ["bids"]
 authors = [
   { name = "Isaac To", email = "candleindark@gmail.com" },
 ]
+version = '0.0.14'  # TODO switch to use versioningit to base off the git tag, and add appropriate git tag for the release
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
