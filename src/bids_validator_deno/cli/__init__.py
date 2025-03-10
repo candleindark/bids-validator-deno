@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
+import sys
+
 
 def bids_validator_deno() -> int:
     """
@@ -16,7 +18,8 @@ def bids_validator_deno() -> int:
 
     # Locate the binary within the package
     binary_path = importlib.resources.files("bids_validator_deno").joinpath(
-        "bin", "bids-validator"
+        "bin",
+        "bids-validator" + (".exe" if sys.platform.startswith("win") else "")
     )
 
     try:
