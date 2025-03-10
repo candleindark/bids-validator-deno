@@ -27,15 +27,15 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Documentation = "https://github.com/Isaac To/bids-validator-deno#readme"
-Issues = "https://github.com/Isaac To/bids-validator-deno/issues"
-Source = "https://github.com/Isaac To/bids-validator-deno"
+Documentation = "https://github.com/candleindark/bids-validator-deno#readme"
+Issues = "https://github.com/candleindark/bids-validator-deno/issues"
+Source = "https://github.com/candleindark/bids-validator-deno"
 
 [project.scripts]
 bids-validator-deno = "bids_validator_deno.cli:bids_validator_deno"
 
 [tool.hatch.build.targets.wheel]
-only-include = ["src/bids_validator_deno", "artifacts/bids-validator"]
+only-include = ["src/bids_validator_deno", "dist/bids-validator"]
 
 [tool.hatch.build.targets.wheel.hooks.custom]
 
