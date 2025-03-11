@@ -34,10 +34,23 @@ Source = "https://github.com/Isaac To/bids-validator-deno"
 [project.scripts]
 bids-validator-deno = "bids_validator_deno.cli:bids_validator_deno"
 
+[tool.hatch.build.hooks.build-scripts]
+dependencies = ["hatch-build-scripts"]
+
+[[tool.hatch.build.hooks.build-scripts.scripts]]
+commands = [
+  "deno compile -ERNW --target x86_64-pc-windows-msvc -o artifacts/bids-validator-x86_64-pc-windows-msvc jsr:@bids/validator",
+  "deno compile -ERNW --target x86_64-apple-darwin -o artifacts/bids-validator-x86_64-apple-darwin jsr:@bids/validator",
+  "deno compile -ERNW --target aarch64-apple-darwin -o artifacts/bids-validator-aarch64-apple-darwin jsr:@bids/validator",
+  "deno compile -ERNW --target x86_64-unknown-linux-gnu -o artifacts/bids-validator-x86_64-unknown-linux-gnu jsr:@bids/validator",
+  "deno compile -ERNW --target aarch64-unknown-linux-gnu -o artifacts/bids-validator-aarch64-unknown-linux-gnu jsr:@bids/validator"
+]
+artifacts = ["/artifacts/bids-validator*"]
+out_dir = "src/bids_validator_deno/bin"
+clear_out_dir = true
+
 [tool.hatch.build.targets.wheel]
 only-include = ["src/bids_validator_deno", "artifacts/bids-validator"]
-
-[tool.hatch.build.targets.wheel.hooks.custom]
 
 [tool.hatch.build.targets.wheel.sources]
 "src" = ""
