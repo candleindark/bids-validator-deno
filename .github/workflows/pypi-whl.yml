@@ -1,4 +1,4 @@
-name: Build Verify Publish
+name: PyPI Whl Publish
 
 on:
   push:
@@ -26,6 +26,9 @@ jobs:
           - ubuntu-latest
           - ubuntu-24.04-arm
       fail-fast: false
+    defaults:
+      run:
+        working-directory: tools/pypi-whl
     steps:
       - uses: denoland/setup-deno@v2
         with:
