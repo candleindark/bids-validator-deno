@@ -38,33 +38,18 @@ def get_platform_tag():
     return platform_tag
 
 
-# picked up from
-# https://github.com/Bing-su/pip-binary-factory/blob/main/zig/pdm_build.py
-
-
-def pdm_build_hook_enabled(context: Context):
-    return context.target != "sdist"
-
-
-def pdm_build_initialize(context: Context) -> None:
-    setting = {"--python-tag": "py3", "--py-limited-api": "none"}
-    context.builder.config_settings = {**setting, **context.builder.config_settings}
-
-    context.ensure_build_dir()
-    # download(context.build_dir)
-
-
 def pdm_build_finalize(context: Context, artifact: Path) -> None:
     renamed = tags(
         str(artifact),
         python_tags="py3",
         abi_tags="none",
-        platform_tags=get_platform_tag(),  ## TODO transform
+        platform_tags=get_platform_tag(),
         remove=True,
     )
-    print(renamed)
+    print(f"INFO: {renamed}")
 
     if context.build_dir.exists():
+        print(f"INFO: cleaning {context.build_dir}")
         shutil.rmtree(context.build_dir)
 
 
