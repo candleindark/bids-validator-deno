@@ -1,10 +1,9 @@
 # bids-validator-deno
 
-[![PyPI - Version](https://img.shields.io/pypi/v/bids-validator-deno.svg)](https://pypi.org/project/bids-validator-deno)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/bids-validator-deno.svg)](https://pypi.org/project/bids-validator-deno)
-
-This is an installer for bids-validator binaries built by deno and distributed within .whl packages via PyPI.
-
+**bids-validator-deno** is a Python installer (distributed as wheels on [PyPI](https://pypi.org)) 
+for the self-contained binary of 
+[bids-validator](https://github.com/bids-standard/bids-validator), 
+compiled with [`deno compile`](https://docs.deno.com/runtime/reference/cli/compile).
 -----
 
 ## Table of Contents
