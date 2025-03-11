@@ -62,6 +62,7 @@ jobs:
           path: tools/pypi-whl/dist/*.whl
       - name: Publish wheels if corresponds to a tag
         # TODO: might be suboptimal since we might skip a tag if not the latest commit
+        shell: bash
         run: |
             # if a clean tag, no - in it
             if git describe | grep -e -; then 
