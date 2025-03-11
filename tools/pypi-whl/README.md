@@ -20,4 +20,6 @@ pip install bids-validator-deno
 
 ## License
 
-`bids-validator-deno` is distributed under the terms of the same license as bids-validator itself, which is [MIT](https://spdx.org/licenses/MIT.html) license.
+`bids-validator-deno` is distributed under the terms of the same license as 
+[bids-validator](https://github.com/bids-standard/bids-validator?tab=readme-ov-file) itself, 
+which is [MIT](https://spdx.org/licenses/MIT.html) license.
