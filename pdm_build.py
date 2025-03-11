@@ -28,7 +28,10 @@ def get_platform_tag():
     if sys.platform.startswith("linux"):
         platform_tag = f"manylinux_2_17_{arch_tag}"
     elif sys.platform == "darwin":
-        platform_tag = f"macosx_10_16_{arch_tag}"
+        if arch_tag == "arm64":
+            platform_tag = f"macosx_11_0_{arch_tag}"
+        else:
+            platform_tag = f"macosx_10_16_{arch_tag}"
     elif sys.platform.startswith("win"):
         platform_tag = f"win_{arch_tag}"
     else:
