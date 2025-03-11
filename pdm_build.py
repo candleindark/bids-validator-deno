@@ -2,8 +2,11 @@
 
 import platform
 import sys
-import os
 from wheel.cli.tags import tags
+from pathlib import Path
+import shutil
+
+from pdm.backend.hooks import Context
 
 
 def get_platform_tag():
@@ -23,20 +26,20 @@ def get_platform_tag():
 
     # Determine OS and construct the appropriate tag
     if sys.platform.startswith("linux"):
-        os_tag = f"manylinux_2_17_{arch_tag}"
+        platform_tag = f"manylinux_2_17_{arch_tag}"
     elif sys.platform == "darwin":
-        os_tag = f"macosx_10_16_{arch_tag}"
+        platform_tag = f"macosx_10_16_{arch_tag}"
     elif sys.platform.startswith("win"):
-        os_tag = f"win_{arch_tag}"
+        platform_tag = f"win_{arch_tag}"
     else:
         raise ValueError(f"Unsupported platform: {sys.platform}")
 
-    # Build the final tag
-    return f"py3-none-{os_tag}"
+    return platform_tag
 
 
-# picked up from 
+# picked up from
 # https://github.com/Bing-su/pip-binary-factory/blob/main/zig/pdm_build.py
+
 
 def pdm_build_hook_enabled(context: Context):
     return context.target != "sdist"
@@ -47,22 +50,22 @@ def pdm_build_initialize(context: Context) -> None:
     context.builder.config_settings = {**setting, **context.builder.config_settings}
 
     context.ensure_build_dir()
-    download(context.build_dir)
+    # download(context.build_dir)
 
 
 def pdm_build_finalize(context: Context, artifact: Path) -> None:
-    platform_tags = ZIG_PYTHON_PLATFORMS[get_platform()]
     renamed = tags(
         str(artifact),
         python_tags="py3",
         abi_tags="none",
-        platform_tags=get_platform_tag(), ## TODO transform
+        platform_tags=get_platform_tag(),  ## TODO transform
         remove=True,
     )
     print(renamed)
 
     if context.build_dir.exists():
         shutil.rmtree(context.build_dir)
+
 
 if __name__ == "__main__":
     try:
