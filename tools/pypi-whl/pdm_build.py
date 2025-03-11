@@ -62,6 +62,7 @@ def pdm_build_finalize(context: Context, artifact: Path) -> None:
 if __name__ == "__main__":
     try:
         tag = get_platform_tag()
-        print(f"The platform tag is: {tag}")
     except ValueError as e:
         print(f"Error: {e}")
+    else:
+        print(f"The platform tag is: {tag}")
