@@ -56,7 +56,7 @@ jobs:
           name: wheel-${{ matrix.os }}
           path: dist/*.whl
       - name: Publish wheels
-        run: twine upload dist/*.whl
+        run: twine upload --repository testpypi dist/*.whl
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
