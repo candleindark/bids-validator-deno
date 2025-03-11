@@ -34,7 +34,8 @@ jobs:
         with:
           deno-version: v2.x
       - uses: actions/checkout@v4
-        fetch-depth: 0
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -60,7 +61,7 @@ jobs:
           name: wheel-${{ matrix.os }}
           path: dist/*.whl
       - name: Publish wheels
-        run: twine upload --repository testpypi dist/*.whl
+        run: twine upload --verbose --repository testpypi dist/*.whl
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
