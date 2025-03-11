@@ -27,6 +27,7 @@ def get_platform_tag():
     # Determine OS and construct the appropriate tag
     if sys.platform.startswith("linux"):
         if arch_tag == "arm64":
+            arch_tag = "aarch64"
             platform_tag = f"manylinux_2_17_{arch_tag}.manylinux2014_{arch_tag}.musllinux_1_1_{arch_tag}"
         else:
             platform_tag = f"manylinux_2_17_{arch_tag}"
