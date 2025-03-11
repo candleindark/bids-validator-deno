@@ -1,5 +1,5 @@
 [build-system]
-requires = ["pdm-backend", "wheel", "requests"]
+requires = ["pdm-backend", "wheel"]
 build-backend = "pdm.backend"
 
 [tool.pdm.build]
