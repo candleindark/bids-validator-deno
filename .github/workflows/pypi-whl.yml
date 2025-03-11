@@ -30,12 +30,13 @@ jobs:
       run:
         working-directory: tools/pypi-whl
     steps:
-      - uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          working-directory: .
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
