@@ -12,7 +12,7 @@ scripts = ["dist/bids-validator", "dist/bids-validator.exe"]
 
 [project]
 name = "bids-validator-deno"
-dynamic = ["version"]
+#dynamic = ["version"]
 description = 'TODO'
 readme = "README.md"
 requires-python = ">=3.8"
