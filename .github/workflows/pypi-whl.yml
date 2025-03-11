@@ -62,16 +62,15 @@ jobs:
           path: tools/pypi-whl/dist/*.whl
       - name: Publish wheels if corresponds to a tag
         # TODO: might be suboptimal since we might skip a tag if not the latest commit
-        shell: bash
         run: |
+            cd tools/pypi-whl
             # if a clean tag, no - in it
             if git describe | grep -e -; then 
                 echo not releasing; 
             else
                 twine upload --verbose --repository testpypi dist/*.whl
             fi
-        with:
-          working-directory: tools/pypi-whl
+        shell: bash
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
