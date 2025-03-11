@@ -61,8 +61,15 @@ jobs:
         with:
           name: wheel-${{ matrix.os }}
           path: dist/*.whl
-      - name: Publish wheels
-        run: twine upload --verbose --repository testpypi dist/*.whl
+      - name: Publish wheels if corresponds to a tag
+        # TODO: might be suboptimal since we might skip a tag if not the latest commit
+        run: |
+            # if a clean tag, no - in it
+            if git describe | grep -e -; then 
+                echo not releasing; 
+            else
+                twine upload --verbose --repository testpypi dist/*.whl
+            fi
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
