@@ -43,15 +43,15 @@ jobs:
         run: |
           cd tools/pypi-whl
           deno compile -ERNW -o dist/bids-validator jsr:@bids/validator
-      - name: Build wheel
-        run: python -m build --wheel
-        working-directory: tools/pypi-whl
       - uses: actions/upload-artifact@v4
         with:
           name: bids-validator-${{ matrix.os }}
           path: |
             tools/pypi-whl/dist/bids-validator
             tools/pypi-whl/dist/bids-validator.*
+      - name: Build wheel
+        run: python -m build --wheel
+        working-directory: tools/pypi-whl
       - name: Print out the content of the dist folder
         run: ls -l tools/pypi-whl/dist/
       - uses: actions/upload-artifact@v4
