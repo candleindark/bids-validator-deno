@@ -42,7 +42,6 @@ jobs:
       - name: Compile deno binaries
         run: |
           cd tools/pypi-whl
-          mkdir dist
           deno compile -ERNW -o dist/bids-validator jsr:@bids/validator
       - name: Build wheel
         run: python -m build --wheel
