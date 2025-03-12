@@ -18,22 +18,24 @@ source = "scm"
 [project]
 name = "bids-validator-deno"
 dynamic = ["version"]
-description = 'TODO'
+description = "Python installer for the self-contained binary of bids-validator"
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
-keywords = ["bids"]
-authors = [
-  { name = "Isaac To", email = "candleindark@gmail.com" },
-]
+keywords = ["bids", "bids-validator"]
+authors = [{ name = "bids-standard developers" }]
 classifiers = [
   "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Information Analysis",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
 ]
 dependencies = []
 
 [project.urls]
+# todo: to be updated once copied to the destination repo
 Documentation = "https://github.com/candleindark/bids-validator-deno#readme"
 Issues = "https://github.com/candleindark/bids-validator-deno/issues"
 Source = "https://github.com/candleindark/bids-validator-deno"
