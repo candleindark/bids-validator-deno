@@ -20,7 +20,7 @@ name = "bids-validator-deno"
 dynamic = ["version"]
 description = "Python installer for the self-contained binary of bids-validator"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = "MIT"
 keywords = ["bids", "bids-validator"]
 authors = [{ name = "bids-standard developers" }]
